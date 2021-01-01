@@ -42,25 +42,25 @@ const Rabbit = {
         });
     },
 
-    findNotes : () => {
-        return new Promise((resolve, reject) => {
-            Rabbit.channel.consume(Rabbit.queue, function(msg) {
-                if (msg !== null) {
-                    note = JSON.parse(msg.content.toString());
-                    resolve([note]);
-                }
-            });
+    findNotesRecursive : (resolve, reject, found) => {
+        Rabbit.channel.get(Rabbit.queue, {noAck: true}, function(err, msg) {
+            if (msg && found.length<5) {
+                found.push(JSON.parse(msg.content.toString()));
+                return Rabbit.findNotesRecursive(resolve, reject, found);
+            }
+            console.log("Found " + found.length + " notes");
+            resolve(found);
         });
     },
 
-    ack : () => {
-        console.log("ackAll");
-        Rabbit.channel.ackAll();
-        Rabbit.close();
+    findNotes : () => {
+        return new Promise((resolve, reject) => {
+            Rabbit.findNotesRecursive(resolve, reject, [])
+        });
     },
 
     close : () => {
-        console.log("Close " );
+        console.log("Close rabbit connection" );
         Rabbit.channel.close();
         Rabbit.connection.close();
     }
@@ -70,4 +70,3 @@ exports.connect = Rabbit.connect.bind(Rabbit);
 exports.exportNote = Rabbit.exportNote.bind(Rabbit);
 exports.findNotes = Rabbit.findNotes.bind(Rabbit);
 exports.close = Rabbit.close.bind(Rabbit);
-exports.ack = Rabbit.ack.bind(Rabbit);

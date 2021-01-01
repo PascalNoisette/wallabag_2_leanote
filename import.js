@@ -14,4 +14,4 @@ Leanote.login(argv.host, argv.email, argv.pwd)
     .then(Rabbit.findNotes)
     .then(notes => Leanote.assignNotebook(argv.notebook, notes))
     .forEach(Leanote.importNote)
-    .all(Rabbit.ack);
+    .all(Rabbit.close);
