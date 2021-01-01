@@ -1,0 +1,154 @@
+openapi: "3.0.0"
+info:
+  description: "This is a leanote server."
+  version: "1.0.0"
+  title: "Leanote Api"
+
+externalDocs:
+  description: "Find out more on github"
+  url: "https://github.com/leanote/leanote/wiki/leanote-api"
+
+paths:
+  /auth/login:
+    get:
+      summary: "Login 登录"
+      description: "Login and retreive a authentication token"
+      operationId: "login"
+      parameters:
+      - name: "email"
+        in: "query"
+        description: "Email as username"
+        required: true
+        schema:
+          type: "string"
+      - name: "pwd"
+        in: "query"
+        description: "Password"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+  /notebook/getSyncNotebooks:
+    get:
+      summary: "getSyncNotebooks 得到需要同步的笔记本 "
+      description: "Retreive tags"
+      operationId: "getSyncNotebooks"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "afterUsn"
+        in: "query"
+        description: "afterUsn"
+        required: false
+        schema:
+          type: "integer"
+          format: "int64"
+      - name: "maxEntry"
+        in: "query"
+        description: "maxEntry"
+        required: false
+        schema:
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Notebook"
+
+  /note/addNote:
+    post:
+      summary: "addNote 添加笔记"
+      description: "Create note.
+      Files must be uploaded to the server together with related pictures/attachments when addingNote
+Among them, Files (file metadata) and other fields are sent out by POST, and the real data is passed in by http multipart, and the name of each file is FileDatas[LocalFileId]
+
+The link of the picture in the note must be: http://leanote.com/api/file/getImage?fileId=LocalFileId or FileId
+If the attachment is inserted into the content of the note, its link must be: http://leanote.com/api/file/getAttach?fileId=LocalFileId or FileId
+Among them, fileId is the local FileId of the file or the FileId of the server
+
+The server will generate the FileId and pass it to the Client. The Client must establish an association between LocalFileId and FileId locally.
+
+If the content of the note is uploaded and there are pictures in the note, you must upload the Files file metadata, because the server side also needs to modify the pictures and attachment links in the content. Maybe you passed the LocalFileId, and the server side will send the LocalFileId Replace with FileId and save it in the database."
+      operationId: "addNote"
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              $ref: "#/components/schemas/Note"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: "apiKey"
+      name: "token"
+      in: "query"
+  schemas:
+    Response:
+      properties:
+        Ok:
+          type: "string"
+        Msg:
+          type: "string"
+        Token:
+          type: "string"
+        UserId:
+          type: "string"
+        Email:
+          type: "string"
+        Username:
+          type: "string"
+        Title:
+          type: "string"
+    Notebook:
+      properties:
+        NotebookId:
+          type: "string"
+        ParentNotebookId:
+          type: "string"
+        Title:
+          type: "string"
+        UrlTitle:
+          type: "string"
+    Note:
+      properties:
+        NotebookId:
+          type: "string"
+        Title:
+          type: "string"
+        Content:
+          type: "string"
+    File:
+      properties:
+        FileId:
+          type: "string"
+        LocalFileId:
+          type: "string"
+        Type:
+          type: "string"
+        Title:
+          type: "string"
+        HasBody:
+          type: "boolean"
+        IsAttach:
+          type: "boolean"

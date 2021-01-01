@@ -1,0 +1,28 @@
+{
+  "name": "wallabag_2_leanote",
+  "version": "1.0.0",
+  "description": "Connector between wallabag and leanote",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PascalNoisette/wallabag_2_leanote.git"
+  },
+  "keywords": [
+    "wallabag"
+  ],
+  "author": "Pascal Noisette",
+  "license": "GPL-2.0-only",
+  "bugs": {
+    "url": "https://github.com/PascalNoisette/wallabag_2_leanote/issues"
+  },
+  "homepage": "https://github.com/PascalNoisette/wallabag_2_leanote#readme",
+  "dependencies": {
+    "client-oauth2": "^4.3.3",
+    "leanote_api": "file:leanote_openapi_client",
+    "wallabag_api": "file:wallabag_openapi_client",
+    "yargs": "^16.2.0"
+  }
+}

@@ -1,0 +1,159 @@
+openapi: "3.0.0"
+info:
+  description: "This is a wallabag server."
+  version: "1.0.0"
+  title: "wallabag Api"
+
+externalDocs:
+  description: "Find out more"
+  url: "https://doc.wallabag.org/"
+
+paths:
+  /api/entries.json:
+    get:
+      summary: "Search for notes"
+      description: "Search for notes"
+      operationId: "findNotes"
+      security:
+        - oAuth: []
+      parameters:
+      - name: archive
+        in: query
+        description: Is Archived
+        schema:
+          type: boolean
+      - name: detail
+        in: query
+        description: Amount of description of note to retreive
+        schema:
+          type: string
+          default: "full"
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+
+  /api/entries/{entry}.json:
+    patch:
+      summary: "Update note"
+      description: "Update note"
+      operationId: "updateNote"
+      security:
+        - oAuth: []
+      parameters:
+        - in: path
+          name: entry
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: false
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Note'
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+    delete:
+      summary: "Delete note"
+      description: "Delete note"
+      operationId: "deleteNote"
+      security:
+        - oAuth: []
+      parameters:
+        - in: path
+          name: entry
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Note"
+
+components:
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      description: This API uses OAuth 2 https://doc.wallabag.org/en/developer/api/oauth.html
+      flows:
+        clientCredentials:
+          tokenUrl: /oauth/v2/token
+          scopes: {}
+  schemas:
+    Response:
+      properties:
+        Ok:
+          type: "string"
+        Msg:
+          type: "string"
+        Token:
+          type: "string"
+        UserId:
+          type: "string"
+        Email:
+          type: "string"
+        Username:
+          type: "string"
+    Collection:
+      properties:
+        _embedded:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Note'
+        _links:
+          type: object
+          properties:
+            first:
+              type: object
+              properties:
+                href:
+                  type: "string"
+            last:
+              type: object
+              properties:
+                href:
+                  type: "string"
+            self:
+              type: object
+              properties:
+                href:
+                  type: "string"
+        limit:
+          type: integer
+        page:
+          type: integer
+        total:
+          type: integer
+        pages:
+          type: integer
+    Note:
+      properties:
+        id:
+          type: integer
+        content:
+          type: "string"
+        is_archived:
+          type: integer
+        title:
+          type: "string"
+        tags:
+          type: "array"
+          items:
+            type: "string"
+        url:
+          type: "string"
