@@ -8,14 +8,26 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  export:
+  import:
     image: wallabag_2_leanote
-    restart: unless-stopped
     volumes:
       -  ./package.json:/app/package.json
       -  ./wallabag.js:/app/wallabag.js
       -  ./polyfill.js:/app/polyfill.js
-      -  ./index.js:/app/index.js
+      -  ./import.js:/app/import.js
       -  ./rabbit.js:/app/rabbit.js
+      -  ./leanote.js:/app/leanote.js
+    depends_on:
+      - ampq
+
+  export:
+    image: wallabag_2_leanote
+    volumes:
+      -  ./package.json:/app/package.json
+      -  ./wallabag.js:/app/wallabag.js
+      -  ./polyfill.js:/app/polyfill.js
+      -  ./export.js:/app/export.js
+      -  ./rabbit.js:/app/rabbit.js
+      -  ./leanote.js:/app/leanote.js
     depends_on:
       - ampq

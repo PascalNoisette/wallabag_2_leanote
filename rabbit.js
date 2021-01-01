@@ -42,6 +42,22 @@ const Rabbit = {
         });
     },
 
+    findNotes : () => {
+        return new Promise((resolve, reject) => {
+            Rabbit.channel.consume(Rabbit.queue, function(msg) {
+                if (msg !== null) {
+                    note = JSON.parse(msg.content.toString());
+                    resolve([note]);
+                }
+            });
+        });
+    },
+
+    ack : () => {
+        console.log("ackAll");
+        Rabbit.channel.ackAll();
+        Rabbit.close();
+    },
 
     close : () => {
         console.log("Close " );
@@ -52,4 +68,6 @@ const Rabbit = {
 
 exports.connect = Rabbit.connect.bind(Rabbit);
 exports.exportNote = Rabbit.exportNote.bind(Rabbit);
+exports.findNotes = Rabbit.findNotes.bind(Rabbit);
 exports.close = Rabbit.close.bind(Rabbit);
+exports.ack = Rabbit.ack.bind(Rabbit);

@@ -2,10 +2,6 @@
   "name": "wallabag_2_leanote",
   "version": "1.0.0",
   "description": "Connector between wallabag and leanote",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PascalNoisette/wallabag_2_leanote.git"

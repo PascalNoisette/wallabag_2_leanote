@@ -13,4 +13,4 @@ RUN cd /app/wallabag_openapi_client && npm install && npm run build
 COPY package.json *.js /app/
 WORKDIR /app
 RUN npm install
-CMD [ "npm", "start" ]
+CMD [ "node" ]
