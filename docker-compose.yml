@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  ampq:
+    restart: unless-stopped
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  export:
+    image: wallabag_2_leanote
+    restart: unless-stopped
+    volumes:
+      -  ./package.json:/app/package.json
+      -  ./wallabag.js:/app/wallabag.js
+      -  ./polyfill.js:/app/polyfill.js
+      -  ./index.js:/app/index.js
+      -  ./rabbit.js:/app/rabbit.js
+    depends_on:
+      - ampq

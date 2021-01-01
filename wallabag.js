@@ -1,7 +1,6 @@
 var WallabagApi = require('wallabag_api');
 var ClientOAuth2 = require('client-oauth2')
 
-
 exports.loginToWallabag = (host, clientId, clientSecret, username, password) => {
 
     var auth = new ClientOAuth2({
@@ -45,21 +44,17 @@ exports.findNotes = () => {
 }
 
 
-exports.exportNote = (note) => {
-    return new Promise((resolve, reject) => {
-        console.log("TODO Export " + note.id);
-        resolve(note);
-    });
-}
-
-
 exports.markNoteAsExported = (note) => {
-    let apiInstance = new WallabagApi.DefaultApi();
-    console.log("TODO DElete is disabled " + note.id);
-    return;
-    apiInstance.deleteNote(note.id, (error, data, response) => {
-        if (error) {
-          console.error(error);
-        }
+    return new Promise((resolve, reject) => {
+        let apiInstance = new WallabagApi.DefaultApi();
+        console.log("TODO Delete is disabled " + note.id);
+        resolve(note);
+        return;
+        apiInstance.deleteNote(note.id, (error, data, response) => {
+            if (error) {
+            console.error(error);
+            }
+            resolve(note);
+        });
     });
 }

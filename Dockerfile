@@ -10,7 +10,7 @@ FROM node:buster-slim
 COPY --from=generator /app/ /app/
 RUN cd /app/leanote_openapi_client && npm install && npm run build
 RUN cd /app/wallabag_openapi_client && npm install && npm run build
-COPY package.json wallabag.js polyfill.js index.js /app/
+COPY package.json *.js /app/
 WORKDIR /app
 RUN npm install
 CMD [ "npm", "start" ]

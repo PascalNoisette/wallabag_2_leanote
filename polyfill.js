@@ -10,3 +10,11 @@ Promise.prototype.forEach = function(callback) {
         })
     );
 }
+
+Promise.prototype.all = function(callback) {
+    return this.then(
+        valueArray => {
+            return Promise.all(valueArray).then(callback)
+        }
+    );
+}

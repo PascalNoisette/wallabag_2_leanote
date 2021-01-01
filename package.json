@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/PascalNoisette/wallabag_2_leanote#readme",
   "dependencies": {
+    "amqplib": "^0.6.0",
     "client-oauth2": "^4.3.3",
     "leanote_api": "file:leanote_openapi_client",
     "wallabag_api": "file:wallabag_openapi_client",
