@@ -28,21 +28,34 @@ exports.assignNotebook = (title, notes) => {
         let apiInstance = new LeanoteApi.DefaultApi();
         apiInstance.getSyncNotebooks({}, (error, notebooks, response) => {
             if (error) {
-              reject(error);
+               return reject(error);
             }
             notebooks = notebooks.filter(notebook=>notebook.Title==title);
             if (notebooks.length<1) {
-              reject(title + " not found");
+               return reject(title + " not found");
             }
             console.log("Import into notebook '" + notebooks[0].Title + "'")
-            notes.map(note => note.notebook_id = notebooks[0].NotebookId);
+            notes.map(note => note.notebookId = notebooks[0].NotebookId);
             resolve(notes);
         });
     });
 }
 
 exports.importNote = (note) => {
-    //TODO
-    console.log('TODO import :');
-    console.log(note.title);
+    return new Promise((resolve, reject) => {
+        let apiInstance = new LeanoteApi.DefaultApi();
+        note.UrlTitle = note.url;
+        note.IsTrash = 0;
+        note.content = '<div class="infoToolbar"><p><a href="' + note.url + '" title="Original">Source : ' + note.url  + '</a><br/></p></div>' + note.content;
+        apiInstance.addNote(note, (error, data, response) => {
+            if (error) {
+                return reject(error);
+            }
+            if (data.Ok == 'false') {
+                return reject(data.Msg)
+            }
+            console.log('Imported ' + note.title + ' successfully');
+            resolve(note);
+        });
+    });
 }

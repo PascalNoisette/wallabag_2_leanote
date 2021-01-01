@@ -8,12 +8,12 @@ const Rabbit = {
         return new Promise((resolve, reject) => {
             Amqp.connect('amqp://ampq', function(error, connection) {
                 if (error) {
-                    reject(error);
+                    return reject(error);
                 }
                 Rabbit.connection = connection;
                 connection.createConfirmChannel(function(error, channel) {
                     if (error) {
-                        reject(error);
+                        return reject(error);
                     }
                     Rabbit.queue = 'wallabag';
 
@@ -33,8 +33,7 @@ const Rabbit = {
             console.log("Try sending " + note.id);
             Rabbit.channel.sendToQueue(Rabbit.queue, Buffer.from(JSON.stringify(note)), { persistent: true }, (error) => {
                 if (error) {
-                    console.error(error);
-                    reject(error)
+                    return reject(error)
                 }
                 console.log("Sent " + note.id);
                 resolve(note)

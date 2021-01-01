@@ -47,12 +47,9 @@ exports.findNotes = () => {
 exports.markNoteAsExported = (note) => {
     return new Promise((resolve, reject) => {
         let apiInstance = new WallabagApi.DefaultApi();
-        console.log("TODO Delete is disabled " + note.id);
-        resolve(note);
-        return;
         apiInstance.deleteNote(note.id, (error, data, response) => {
             if (error) {
-            console.error(error);
+                return reject(error);
             }
             resolve(note);
         });

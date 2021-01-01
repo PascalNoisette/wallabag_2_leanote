@@ -118,3 +118,4 @@ dist
 
 wallabag_openapi_client/
 leanote_openapi_client
+package-lock.json
