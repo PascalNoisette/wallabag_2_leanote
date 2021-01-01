@@ -9,25 +9,13 @@ services:
       - "15672:15672"
 
   import:
-    image: wallabag_2_leanote
-    volumes:
-      -  ./package.json:/app/package.json
-      -  ./wallabag.js:/app/wallabag.js
-      -  ./polyfill.js:/app/polyfill.js
-      -  ./import.js:/app/import.js
-      -  ./rabbit.js:/app/rabbit.js
-      -  ./leanote.js:/app/leanote.js
+    image: netpascal0123/wallabag_2_leanote
+    command: export.js --client_id=$CLIENT_ID --client_secret=$CLIENT_SECRET --login=$USERNAME  --password=$PASSWORD  --host=$WALLABAG_HOST
     depends_on:
       - ampq
 
   export:
-    image: wallabag_2_leanote
-    volumes:
-      -  ./package.json:/app/package.json
-      -  ./wallabag.js:/app/wallabag.js
-      -  ./polyfill.js:/app/polyfill.js
-      -  ./export.js:/app/export.js
-      -  ./rabbit.js:/app/rabbit.js
-      -  ./leanote.js:/app/leanote.js
+    image: netpascal0123/wallabag_2_leanote
+    command: import.js --notebook=$NOTEBOOK --email=$EMAIL --pwd=$PWD --host=$LEANOTE_HOST
     depends_on:
       - ampq
