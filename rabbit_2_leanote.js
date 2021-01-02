@@ -1,9 +1,9 @@
-require('./polyfill');
-var Leanote = require('./leanote');
-var Rabbit = require('./rabbit');
+require('./lib/helper/polyfill');
+var Leanote = require('./lib/application/leanote');
+var Rabbit = require('./lib/application/rabbit');
 var Yargs = require('yargs');
 
-const argv = Yargs.command('leanote_api_import', 'Push notes to leanote')
+const argv = Yargs.command('rabbit_2_leanote', 'Push notes to leanote')
     .demandOption(['host', 'email', 'pwd', 'notebook'], 'Please provide all arguments to work with this tool')
     .help()
     .alias('help', 'h')

@@ -11,6 +11,7 @@ COPY --from=generator /app/ /app/
 RUN cd /app/leanote_openapi_client && npm install && npm run build
 RUN cd /app/wallabag_openapi_client && npm install && npm run build
 COPY package.json *.js /app/
+COPY lib /app/lib
 WORKDIR /app
 RUN npm install
 CMD [ "node" ]

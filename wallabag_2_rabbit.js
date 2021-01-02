@@ -1,9 +1,9 @@
-require('./polyfill');
-var Wallabag = require('./wallabag');
-var Rabbit = require('./rabbit');
+require('./lib/helper/polyfill');
+var Wallabag = require('./lib/application/wallabag');
+var Rabbit = require('./lib/application/rabbit');
 var Yargs = require('yargs');
 
-const argv = Yargs.command('wallabag_api_extract', 'Pull wallbag notes')
+const argv = Yargs.command('wallabag_2_rabbit', 'Pull wallbag notes')
     .demandOption(['host', 'client_id', 'client_secret', 'login', 'password'], 'Please provide all arguments to work with this tool')
     .help()
     .alias('help', 'h')
