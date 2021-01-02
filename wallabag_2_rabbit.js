@@ -11,7 +11,8 @@ const argv = Yargs.command('wallabag_2_rabbit', 'Pull wallbag notes')
 
 Wallabag.loginToWallabag(argv.host, argv.client_id, argv.client_secret, argv.login, argv.password)
     .then(Rabbit.connect)
-    .then(Wallabag.findNotes)
+    .then(Wallabag.findEntry)
+    .forEach(Wallabag.convertToNote)
     .forEach(Rabbit.exportNote)
     .forEach(Wallabag.markNoteAsExported)
     .all(Rabbit.close);

@@ -18,7 +18,10 @@
   "dependencies": {
     "amqplib": "^0.6.0",
     "client-oauth2": "^4.3.3",
+    "imap-simple": "^5.0.0",
     "leanote_api": "file:leanote_openapi_client",
+    "lodash": "^4.17.20",
+    "mailparser": "^3.0.1",
     "wallabag_api": "file:wallabag_openapi_client",
     "yargs": "^16.2.0"
   }
