@@ -138,6 +138,15 @@ components:
           type: "string"
         Content:
           type: "string"
+        Files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        FileDatas:
+            type: array
+            items:
+              type: string
+              format: binary
     File:
       properties:
         FileId:
