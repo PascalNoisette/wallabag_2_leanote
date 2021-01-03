@@ -138,18 +138,3 @@ components:
           type: "string"
         Content:
           type: "string"
-        Files[0][FileId]:
-          type: "string"
-        Files[0][LocalFileId]:
-          type: "string"
-        Files[0][Type]:
-          type: "string"
-        Files[0][Title]:
-          type: "string"
-        Files[0][HasBody]:
-          type: "string"
-        Files[0][IsAttach]:
-          type: "string"
-        FileDatas[0]:
-          type: string
-          format: binary
