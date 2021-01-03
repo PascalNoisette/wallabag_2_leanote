@@ -23,3 +23,8 @@ services:
   wallabag_2_leanote:
     image: netpascal0123/wallabag_2_leanote
     command: wallabag_2_leanote.js --notebook=$NOTEBOOK --email=$EMAIL --pwd=$PWD --leanote_host=$LEANOTE_HOST --client_id=$CLIENT_ID --client_secret=$CLIENT_SECRET --login=$USERNAME  --password=$PASSWORD  --wallabag_host=$WALLABAG_HOST
+
+  email_2_leanote:
+    image: netpascal0123/wallabag_2_leanote
+    command: email_2_leanote.js --notebook=$NOTEBOOK --email=$EMAIL --pwd=$PWD --leanote_host=$LEANOTE_HOST --user=$MAIL_USER --password=$MAIL_PASSWORD --host=$MAIL_HOST --port=$PORT --tls=$TLS
+
