@@ -14,7 +14,7 @@ const argv = Yargs.command('wallabag_2_leanote', 'Push notes to leanote')
 
 Wallabag.loginToWallabag(argv.wallabag_host, argv.client_id, argv.client_secret, argv.login, argv.password)
     .then(()=>Leanote.login(argv.leanote_host, argv.email, argv.pwd))
-    .then(Wallabag.findNotes)
+    .then(Wallabag.findEntry)
     .then(notes => Leanote.assignNotebook(argv.notebook, notes))
     .forEach(Wallabag.convertToNote)
     .forEach(Leanote.importNote)
