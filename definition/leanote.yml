@@ -138,26 +138,18 @@ components:
           type: "string"
         Content:
           type: "string"
-        Files:
-          type: array
-          items:
-            $ref: '#/components/schemas/File'
-        FileDatas:
-            type: array
-            items:
-              type: string
-              format: binary
-    File:
-      properties:
-        FileId:
+        Files[0][FileId]:
           type: "string"
-        LocalFileId:
+        Files[0][LocalFileId]:
           type: "string"
-        Type:
+        Files[0][Type]:
           type: "string"
-        Title:
+        Files[0][Title]:
           type: "string"
-        HasBody:
-          type: "boolean"
-        IsAttach:
-          type: "boolean"
+        Files[0][HasBody]:
+          type: "string"
+        Files[0][IsAttach]:
+          type: "string"
+        FileDatas[0]:
+          type: string
+          format: binary
