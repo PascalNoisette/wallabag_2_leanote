@@ -66,7 +66,121 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Notebook"
+  /note/getNotes:
+    get:
+      summary: "getNotes 获得某笔记本下的笔记(无内容) "
+      description: "Retreive note under notebook"
+      operationId: "getNotes"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "notebookId"
+        in: "query"
+        description: "notebookId"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/NoteContent"
 
+  /note/getNoteAndContent:
+    get:
+      summary: "getNoteAndContent 获得笔记内容 "
+      description: "Retreive the content of a note"
+      operationId: "getNoteAndContent"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "noteId"
+        in: "query"
+        description: "noteId"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/NoteContent"
+
+  /note/getNoteContent:
+    get:
+      summary: "getNoteContent 获得笔记内容 "
+      description: "Retreive the content of a note"
+      operationId: "getNoteContent"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "noteId"
+        in: "query"
+        description: "noteId"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/NoteContent"
+
+  /file/getAttach:
+    get:
+      summary: "getAttach 获取附件"
+      description: "Retreive binnary attachement"
+      operationId: "getAttach"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "fileId"
+        in: "query"
+        description: "fileId"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
+
+  /file/getImage:
+    get:
+      summary: "getImage 获取图片"
+      description: "Retreive binnary image"
+      operationId: "getImage"
+      security:
+        - ApiKeyAuth: []
+      parameters:
+      - name: "fileId"
+        in: "query"
+        description: "fileId"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: byte
   /note/addNote:
     post:
       summary: "addNote 添加笔记"
@@ -138,3 +252,34 @@ components:
           type: "string"
         Content:
           type: "string"
+    NoteContent:
+      properties:
+        NotebookId:
+          type: "string"
+        Title:
+          type: "string"
+        NoteId:
+          type: "string"
+        Tags:
+          type: "array"
+          items:
+            type: "string"
+        Content:
+          type: "string"
+        Files:
+          type: "array"
+          items:
+            type: object
+            properties:
+              FileId:
+                  type: "string"
+              LocalFileId:
+                  type: "string"
+              Type:
+                  type: "string"
+              Title:
+                  type: "string"
+              HasBody:
+                  type: "boolean"
+              IsAttach:
+                  type: "boolean"

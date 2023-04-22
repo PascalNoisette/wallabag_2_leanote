@@ -8,8 +8,21 @@ I use Wallabag as a webclipper (and emails to share more complex data than a sin
 
 Copy env.sample as a file named .env, fill the blanks, then launch ```docker-compose up wallabag_2_leanote```
 
-
 ## How to remove emails and move them to leanote
 
 Copy env.sample as a file named .env, fill the blanks, then launch ```docker-compose up wallabag_2_leanote```
 
+## Vice versa
+
+
+| Input    | Output   |
+| :--------- | ---------- |
+| Imap     | Leanote  |
+| Leanote  | Markdown |
+| Rabbitmq | Leanote  |
+| Wallabag | Leanote  |
+| Wallabag | Markdown |
+| Wallabag | Rabbitmq |
+|          |          |
+|          |          |
+|          |          |
